@@ -1,0 +1,24 @@
+
+// Global SCSS Variables for the entire project
+
+$primary-color: #F17227;
+$second-color: #9F433A;
+$third-color: #3F8A9C;
+$primary-white-color: rgba($primary-color, 0.4) ;
+$text-color: #110f0f;
+$text-color-secondary: #525252;
+$border-color: #EEEFEF;
+$bady-font: "Inter", sans-serif;
+$heading-font: "Playfair Display", serif;
+$transition: all 1s ease-in-out;
+$transition-fast: all 0.5s linear;
+$border-radius: 50px;
+$border: 1px solid $border-color;
+$box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.02);
+$gradient-color: linear-gradient(135deg,#2c3e50  0%, #1a4b66 50%,#1c325c  100%);
+
+
+// old colors
+// #1C325C  , #C5955B
+// new colors
+// #9F433A   , #F17227  , #3F8A9C

@@ -1,0 +1,920 @@
+@if (!tour) {
+<div class="loading d-flex justify-content-center align-items-center">
+  <div class="spinner-border text-dark" role="status">
+    <span class="visually-hidden text-dark">Loading...</span>
+  </div>
+</div>
+} @if (tour) {
+ <section class="details-banner mb-5">
+   <div class="banner-breadcrumb">
+     <div class="container py-3">
+       <span class="text-white">
+         <i class="fa fa-home me-2 "></i>
+         <span  routerLink="/">Home</span>
+         <span class="mx-3">/</span>
+         <span class="textSecondColor">{{ tour.title }}</span>
+       </span>
+     </div>
+   </div>
+   <figure class="overflow-hidden position-relative">
+    <img
+      [src]="backgroundImage"
+      class="w-100"
+      [alt]="tour.title"
+      [title]="tour.title"
+      loading="lazy"
+    />
+    <figcaption class="flexCenter">
+      <div class="text-center text-white">
+        
+        <h1 class="text-white text-capitalize my-3">{{ tour.title }}</h1>
+        
+        <button class="mainBtn mt-4 px-4 py-3 text-capitalize" (click)="openGalleryLightbox()">
+          <i class="fa fa-image me-2"></i>
+          <span>Explore Gallery</span>
+        </button>
+
+      </div>
+    </figcaption>
+  </figure>
+</section> 
+
+
+<section class="my-5 pt-5 tour-details">
+  <div class="container">
+    <div class="row g-3 justify-content-between">
+      <div class="col-lg-8">
+        <div class="tour-details-content px-lg-5">
+          <!-- description -->
+          <div class="description text-center">
+            <h2 class="text-capitalize mb-4 text-color h3 position-relative">About {{ tour.title }}</h2>
+            <p class="text-muted ">{{ tour.overview_text }}</p>
+
+            <!-- <div class="row g-3 my-4 border p-3 rounded-3">
+              <div class="col-md-4">
+                <div class="d-flex align-items-center">
+                  <i class="fa fa-calendar-days me-3 textSecondColor"></i>
+                  <div class="">
+                    <h6 class="mb-0">Duration</h6>
+                    <span class="text-color-secondary fontsm">{{ tour.duration }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="d-flex align-items-center">
+                  <i class="fa fa-calendar-days me-3 textSecondColor"></i>
+                  <div>
+                    <h6 class="mb-0">Type</h6>
+                    <span class="text-color-secondary fontsm">{{ tour.type }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="d-flex align-items-center">
+                  <i class="fa fa-calendar-days me-3 textSecondColor"></i>
+                  <div>
+                    <h6 class="mb-0">Run</h6>
+                    <span class="text-color-secondary fontsm">{{ tour.run }}</span>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          </div>
+
+
+          <!-- details info -->
+           <div class="details-info my-5 p-4 rounded-3">
+            <div class="bg-white p-3 rounded-3 border mb-3">
+              <i class="fa fa-calendar-days textSecondColor"></i>
+              <span class="text-capitalize mx-3 fw-bold">Duration:</span>
+              <span class="text-muted ">{{ tour.duration }}</span>
+            </div>
+            <div class="bg-white p-3 rounded-3 border mb-3">
+              <i class="fa fa-location-dot textSecondColor"></i>
+              <span class="text-capitalize mx-3 fw-bold">Destination:</span>
+              <span class="text-muted ">{{ tour.destinations[0].title }}</span>
+            </div>
+            <div class="bg-white p-3 rounded-3 border mb-3">
+              <i class="fa fa-users textSecondColor"></i>
+              <span class="text-capitalize mx-3 fw-bold">Type:</span>
+              <span class="text-muted ">{{ tour.type }}</span>
+            </div>
+            <div class="bg-white p-3 rounded-3 border ">
+              <i class="fa fa-clock textSecondColor"></i>
+              <span class="text-capitalize mx-3 fw-bold">Run:</span>
+              <span class="text-muted ">{{ tour.run }}</span>
+            </div>
+           </div>
+
+           <!-- itinerary -->
+           <div class="mb-5">
+            <h2 class="text-capitalize mb-4 text-center h3">{{tour.title}} Itinerary</h2>
+            @if (tour && tour.days && tour.days.length > 0) {
+            <div class="faq-accordion">
+              @for (day of tour.days; track day.id; let i = $index) {
+              <div class="faq-item" [class.active]="isOpen(i)">
+                <button
+                  type="button"
+                  class="faq-question"
+                  (click)="toggleItinerary(i)"
+                  [attr.aria-expanded]="isOpen(i)"
+                >
+                  <span class="faq-question-text">{{ day.title || 'Day ' + (i + 1) }}</span>
+                  <span class="faq-icon">
+                    @if (isOpen(i)) {
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M6 3L10 7H2L6 3Z" fill="currentColor" transform="rotate(180 6 6)" />
+                    </svg>
+                    } @else {
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M6 3L10 7H2L6 3Z" fill="currentColor" />
+                    </svg>
+                    }
+                  </span>
+                </button>
+                @if (isOpen(i) && day.safeDescription) {
+                <div class="faq-answer">
+                  <div [innerHTML]="day.safeDescription"></div>
+                </div>
+                }
+              </div>
+              }
+            </div>
+            } @else {
+            <div class="border p-3 rounded-3">
+              <p class="text-muted mb-0">No itinerary available at the moment.</p>
+            </div>
+            }
+          </div>
+
+          <!-- included & excluded -->
+          <div class="mb-5">
+            <h2 class="text-capitalize mb-4 text-center h3">What's Included</h2>
+            <p class="text-muted text-center fontsm">Your investment includes everything needed for an extraordinary Egyptian adventure.</p>
+            
+            <div class="included p-4 rounded-3 border bg-white my-4">
+              <h6 class="mb-3 text-capitalize h5 fw-bold">Included in your journey</h6>
+              <ul class="list-unstyled">
+                @for (include of includedList; track $index) {
+                <li class="d-flex gap-2 mb-2 pb-2 border-bottom bg-white p-2 rounded-3">
+                  <i class="fa fa-check textSecondColor"></i>
+                  <span class="text-color-secondary fontsm">{{ include }}</span>
+                </li>
+                }
+              </ul>
+            </div>
+
+            <div class="excluded p-4 rounded-3 border bg-white my-4">
+              <h6 class="mb-3 text-capitalize h5 fw-bold">Excluded from your journey</h6>
+              <ul class="list-unstyled">
+                @for (exclude of excludedList; track $index) {
+                <li class="d-flex gap-2 mb-2 pb-2 border-bottom p-2 rounded-3">
+                  <i class="fa fa-xmark textSecondColor"></i>
+                  <span class="text-color-secondary fontsm">{{ exclude }}</span>
+                </li>
+                }
+              </ul>
+            </div>
+          </div>
+
+          <!-- highlights -->
+          <div class="mb-5">
+            <h2 class="text-capitalize mb-4 text-center h3">
+              Highlights of <span class="textMainColor mx-1">{{ tour.title }}</span>
+            </h2>
+            @if (tour.highlights) {
+            <div class="border p-3 rounded-3">
+              <div class="d-flex align-items-center gap-2">
+                <i class="fa fa-check textSecondColor me-3"></i>
+                <span class="text-color-secondary ">{{ tour.highlights }}</span>
+              </div>
+            </div>
+            }@else{
+              <span class="text-color-secondary ">No highlights found for this tour at the moment.</span>
+            }
+          </div>
+
+          <!-- faq -->
+          <div class="mb-5">
+            <h2 class="text-capitalize mb-4 text-center h3">Frequently Asked & Question</h2>
+            <app-faq-content></app-faq-content>
+          </div>
+
+          <!-- reviews -->
+          <div class="mb-5 reviews">
+            <h2 class="text-capitalize mb-4 text-center h3">Customer Review & Rating</h2>
+            <div class="border p-3 rounded-3 text-center py-4">
+              <h5 class="text-capitalize h5 mb-0">{{ getReviewQualityText() }}</h5>
+              <span class="rating-number fw-bolder">{{ getAverageRating().toFixed(1) }}</span>
+              <div class="rating text-warning fontsm mb-3 mx-auto">
+                @for (i of [1, 2, 3, 4, 5]; track i) {
+                <i [ngClass]="i <= getAverageRating() ? 'fa-solid' : 'fa-regular'" class="fa fa-star"></i>
+                }
+              </div>
+
+              <button
+                data-bs-toggle="modal"
+                data-bs-target="#writeReviewModal"
+                type="button"
+                class="mainBtn"
+              >
+                @if (isLoading) {
+                <span class="spinner-border spinner-border-sm ms-2"></span>
+                } @else { Write a Review }
+              </button>
+            </div>
+
+            <div class="border p-3 rounded-3 py-4 my-3">
+              @if (reviews.length > 0) { @for (review of reviews.slice(-5); track review.id) {
+              <div class="review mb-2 bg-succes pb-2 border-bottom">
+                <div class="flexBetween text-center">
+                  <h5 class="text-capitalize h5 mb-0">{{ review.reviewer_name }}</h5>
+                  <div>
+                    <span class="fs-5 fw-bolder">{{ review.rate.toFixed(1) }}</span>
+                    <div class="rating text-warning fontsm ">
+                      @for (i of [1, 2, 3, 4, 5]; track i) {
+                      <i [ngClass]="i <= review.rate ? 'fa-solid' : 'fa-regular'" class="fa fa-star"></i>
+                      }
+                    </div>
+                  </div>
+                </div>
+                <p class="text-muted mb-0">{{ review.content }}</p>
+                <p class="text-muted mb-0">{{ review.created_at | date : 'dd/MM/yyyy' }}</p>
+              </div>
+              } } @else {
+              <p class="text-muted mb-0">No reviews available at the moment.</p>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="bookingBox p-3 rounded-4">
+          <!-- booking form -->
+          <div class=" border rounded-3 mb-4 overflow-hidden">
+            <div class="headForm flexBetween px-3 py-4">
+              <p class="text-capitalize mb-1 text-white">Reserve Your Journey</p>
+              <h6  class="text-capitalize mainBtn px-3 py-2 text-center">
+                From
+                @if (totalPrice > 0) {
+                <b class="textMainColor fs-3 mb-3">{{ totalPrice | currency }}</b>
+                } @else {
+                <b class="textMainColor fs-3 mb-3">{{ tour.start_from | currency }}</b>
+                }
+              </h6>
+            </div>
+
+            <div class="d-flex align-items-center gap-2 mt-4 px-3">
+
+              <button
+                type="button"
+                class="mainBtn w-100 mb-3 fontsm"
+                data-bs-toggle="modal"
+                data-bs-target="#availabilityModal"
+              >
+                Check Availability
+              </button>
+              <button
+                type="button"
+                class="secBtn w-100 mb-3 fontsm"
+                data-bs-toggle="modal"
+                data-bs-target="#enquiryModal"
+              >
+                Submit an Enquiry
+              </button>
+            </div>
+          </div>
+
+          <div class="why-choose-us border rounded-3 p-3 mb-4">
+            <h6 class="text-capitalize mb-4 text-color h5">why choose us</h6>
+            <ul class="list-unstyled text-capitalize">
+              <li class="d-flex gap-2 mb-3 pb-2 border-bottom ">
+                <i class="fa fa-shield textSecondColor"></i>
+                <span class="text-color-secondary fontsm">Best Price Guarantee</span>
+              </li>
+              <li class="d-flex gap-2 mb-3 pb-2 border-bottom ">
+                <i class="fa fa-headset textSecondColor"></i>
+                <span class="text-color-secondary fontsm">24/7 travel support</span>
+              </li>
+              <li class="d-flex gap-2 mb-3 pb-2 border-bottom ">
+                <i class="fa fa-award textSecondColor"></i>
+                <span class="text-color-secondary fontsm">award winning service</span>
+              </li>
+              <li class="d-flex gap-2 ">
+                <i class="fa fa-users textSecondColor"></i>
+                <span class="text-color-secondary fontsm">small group experience</span>
+              </li>
+            </ul>
+
+          </div>
+
+          <div class="why-choose-us border rounded-3 p-3 mb-4">
+            <h6 class="text-capitalize mb-4 text-color h5">get in touch</h6>
+            <ul class="list-unstyled text-capitalize">
+              <li class="d-flex gap-2 mb-3 pb-2 border-bottom ">
+                <i class="fa fa-phone textSecondColor"></i>
+                <span class="text-color-secondary fontsm">{{ phoneNumber }}</span>
+              </li>
+              <li class="d-flex gap-2 mb-3 pb-2 border-bottom ">
+                <i class="fa fa-envelope textSecondColor"></i>
+                <span class="text-color-secondary fontsm">{{ settingsEmail }}</span>
+              </li>
+              <li class="d-flex gap-2 mb-3 pb-2 border-bottom ">
+                <i class="fa fa-clock textSecondColor"></i>
+                <span class="text-color-secondary fontsm">Available 24/7</span>
+              </li>
+              <li class="d-flex gap-2 ">
+                <i class="fa fa-location-dot textSecondColor"></i>
+                <span class="text-color-secondary fontsm">{{ address }}</span>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- fixed bottom button in mobile -->
+<div
+  class="mobile-navbar position-fixed bottom-0 left-0 right-0 bg-white p-3 border-top w-100 d-md-none flexBetween flex-wrap gap-2"
+>
+  <div class="flex-grow-1">
+    <p class="text-capitalize mb-1">Starting From</p>
+    <h5 class="text-capitalize">
+      @if (totalPrice > 0) {
+      <b class="textMainColor fs-3 mb-4">{{ totalPrice | currency }}</b>
+      } @else {
+      <b class="textMainColor fs-3 mb-4">{{ tour.start_from | currency }}</b>
+      }
+      <span class="fontsm mx-1">/per person</span>
+    </h5>
+  </div>
+  <div class="d-flex align-items-center gap-2 fontsm">
+    <button class="mainBtn" data-bs-toggle="modal" data-bs-target="#availabilityModal">
+      Check Availability
+    </button>
+    <button class="secBtn" data-bs-toggle="modal" data-bs-target="#enquiryModal">
+      Submit an Enquiry
+    </button>
+  </div>
+</div>
+
+<!-- availability modal -->
+<div
+  class="modal fade"
+  id="availabilityModal"
+  tabindex="-1"
+  aria-labelledby="availabilityModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <!-- <h5 class="modal-title" id="availabilityModalLabel">Check Availability</h5> -->
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mainTitle">
+          <h2 class="text-capitalize mb-3 text-color h4">Dates & Availability</h2>
+          <p>
+            Select your travel date & time, also minium traveller for reason easily booking a
+            package.
+          </p>
+        </div>
+
+        <form [formGroup]="bookingForm" (ngSubmit)="submitBookingForm()">
+          <!-- Date and Travelers Input Row -->
+          <div class="row g-3 mb-4">
+            <!-- Booking Date Input -->
+            <div class="col-md-6">
+              <div class="booking-input-wrapper position-relative">
+                <div class="booking-input" (click)="openDatePicker()">
+                  <i class="fa fa-calendar-days input-icon"></i>
+                  <div class="input-content">
+                    <div class="input-value">{{ getFormattedDate() }}</div>
+                    <div class="input-label">Booking Date</div>
+                  </div>
+                  <span class="input-indicator" [class.active]="isDatePickerOpen"></span>
+                </div>
+                <!-- Hidden Material Datepicker -->
+                <mat-form-field class="hidden-datepicker">
+                  <input
+                    matInput
+                    formControlName="start_date"
+                    [matDatepicker]="bookingDatepicker"
+                    readonly
+                  />
+                  <mat-datepicker
+                    #bookingDatepicker
+                    (closed)="onDatepickerClosed()"
+                    (opened)="isDatePickerOpen = true"
+                  ></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!-- Travelers Input -->
+            <div class="col-md-6">
+              <div class="booking-input-wrapper position-relative">
+                <div class="booking-input" (click)="toggleTravelersDropdown()">
+                  <i class="fa fa-user input-icon"></i>
+                  <div class="input-content">
+                    <div class="input-value">{{ getTravelersText() }}</div>
+                    <div class="input-label">Select Travelers</div>
+                  </div>
+                  <span class="input-indicator" [class.active]="isTravelersDropdownOpen"></span>
+                </div>
+                @if (isTravelersDropdownOpen) {
+                <div class="travelers-dropdown">
+                  <div class="travelers-header">
+                    <h6 class="mb-1">Travelers</h6>
+                    <p class="fontsm mb-0 text-color-secondary">
+                      You can book for a maximum number of people 20
+                    </p>
+                  </div>
+                  <div class="travelers-counter">
+                    <div class="counter-item">
+                      <label class="counter-label">Adult</label>
+                      <div class="counter-controls">
+                        <button
+                          type="button"
+                          class="counter-btn"
+                          (click)="decrement('adults')"
+                          [disabled]="(bookingForm.get('adults')?.value || 0) <= 0"
+                        >
+                          <i class="fa fa-minus"></i>
+                        </button>
+                        <span class="counter-value">{{
+                          bookingForm.get('adults')?.value || 0
+                        }}</span>
+                        <button
+                          type="button"
+                          class="counter-btn"
+                          (click)="increment('adults')"
+                          [disabled]="getTotalTravelers() >= 20"
+                        >
+                          <i class="fa fa-plus"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="counter-item">
+                      <label class="counter-label">Children</label>
+                      <div class="counter-controls">
+                        <button
+                          type="button"
+                          class="counter-btn"
+                          (click)="decrement('children')"
+                          [disabled]="(bookingForm.get('children')?.value || 0) <= 0"
+                        >
+                          <i class="fa fa-minus"></i>
+                        </button>
+                        <span class="counter-value">{{
+                          bookingForm.get('children')?.value || 0
+                        }}</span>
+                        <button
+                          type="button"
+                          class="counter-btn"
+                          (click)="increment('children')"
+                          [disabled]="getTotalTravelers() >= 20"
+                        >
+                          <i class="fa fa-plus"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="counter-item">
+                      <label class="counter-label">Infants</label>
+                      <div class="counter-controls">
+                        <button
+                          type="button"
+                          class="counter-btn"
+                          (click)="decrement('infants')"
+                          [disabled]="(bookingForm.get('infants')?.value || 0) <= 0"
+                        >
+                          <i class="fa fa-minus"></i>
+                        </button>
+                        <span class="counter-value">{{
+                          bookingForm.get('infants')?.value || 0
+                        }}</span>
+                        <button
+                          type="button"
+                          class="counter-btn"
+                          (click)="increment('infants')"
+                          [disabled]="getTotalTravelers() >= 20"
+                        >
+                          <i class="fa fa-plus"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- Tour Add-ons Selection (options = array of option_id; price uses form adults/children/infants) -->
+          @if (tourOptions.length > 0) {
+          <div class="tour-types-section mb-4">
+            <div class="flexBetween mb-2">
+              <h6 class="mb-1">Tour Add-ons</h6>
+              <h6 class="mb-1 textMainColor">Total: {{ totalAddOnsPrice | currency }}</h6>
+            </div>
+            @for (option of tour.options; track option.id) {
+            <div class="option-dropdown-wrapper mb-2">
+              <div class="option-header d-flex align-items-center justify-content-between gap-2 border rounded p-2">
+                <label class="d-flex align-items-center gap-2 mb-0 flex-grow-1 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    [checked]="isOptionSelected(option.id)"
+                    (change)="toggleOption(option.id)"
+                  />
+                  <div>
+                    <h6 class="mb-0 text-capitalize">{{ option.name }}</h6>
+                    @if (option.description && option.description !== '.') {
+                    <p class="text-muted mb-0 fontsm">{{ option.description }}</p>
+                    }
+                  </div>
+                </label>
+                @if (isOptionSelected(option.id)) {
+                <span class="textMainColor fw-bold">{{ getOptionPrice(option.id) | currency }}</span>
+                }
+              </div>
+            </div>
+            }
+          </div>
+          }@else{
+          <p class="text-muted mb-0 fs-3 text-capitalize">No options available at the moment.</p>
+          }
+
+          <!-- tour price + total price of all selected options -->
+          <div class="flexBetween">
+            <h6 class="mb-1">Tour Price</h6>
+            <h6 class="mb-1 textMainColor">{{ totalPrice + totalAddOnsPrice | currency }}</h6>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="text-center mt-4">
+            <button type="submit" class="mainBtn w-100 fontsm">Book Now</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+}
+
+<!-- related tours -->
+<section class="my-5 related-tours">
+  <div class="container">
+    <div class="mainTitle">
+      <h2 class="text-capitalize mb-3 text-color h4">Relevant Package</h2>
+      <p>A curated list of the most popular travel packages based on different destinations.</p>
+    </div>
+    @if (relatedTours.length > 0) {
+    <owl-carousel-o [options]="relatedToursOptions">
+      @for (tour of relatedTours; track tour.id) {
+      <ng-template carouselSlide>
+        <app-tour-cart [tour]="tour"></app-tour-cart>
+      </ng-template>
+      }
+    </owl-carousel-o>
+    } @else {
+    <p class="text-muted mb-0 fs-3 text-capitalize">No related tours available at the moment.</p>
+    }
+  </div>
+</section>
+
+<!-- write review modal -->
+<div
+  class="modal fade"
+  id="writeReviewModal"
+  tabindex="-1"
+  aria-labelledby="writeReviewModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="writeReviewModalLabel">Write a Review</h5>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="writeReview" (ngSubmit)="submitWriteReview()">
+          <div class="mb-3">
+            <label for="reviewer_name" class="form-label">Reviewer Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="reviewer_name"
+              formControlName="reviewer_name"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="rate" class="form-label">Rate</label>
+            <input type="number" max="5" min="0" class="form-control" id="rate" formControlName="rate" />
+          </div>
+          <div class="mb-3">
+            <input type="checkbox" id="confirm" formControlName="confirm" />
+            <label for="confirm" class="form-label ms-2">Confirm</label>
+          </div>
+          <div class="mb-3">
+            <label for="content" class="form-label">Content</label>
+            <textarea class="form-control" id="content" formControlName="content"></textarea>
+          </div>
+          <button type="submit" class="mainBtn w-100">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- enquiry modal -->
+<div
+  class="modal fade"
+  id="enquiryModal"
+  tabindex="-1"
+  aria-labelledby="enquiryModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content enquiry-modal-content">
+      <div class="modal-header border-bottom-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="enquiry-form-wrapper">
+          <h2 class="enquiry-title">We'd Love to Hear From You!</h2>
+
+          <form class="row g-3" [formGroup]="enquiryForm" (ngSubmit)="submitEnquiryForm()">
+            <!-- Full Name -->
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="name" class="form-label">Full Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  formControlName="name"
+                  class="form-control enquiry-input"
+                  placeholder="Your Name"
+                />
+                @if (enquiryForm.get('name')?.invalid && enquiryForm.get('name')?.touched)
+                {
+                <small class="text-danger">Full name is required</small>
+                }
+              </div>
+            </div>
+
+            <!-- Email Address -->
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input
+                  type="email"
+                  id="email"
+                  formControlName="email"
+                  class="form-control enquiry-input"
+                  placeholder="Email Address"
+                />
+                @if (enquiryForm.get('email')?.invalid && enquiryForm.get('email')?.touched) {
+                <small class="text-danger">
+                  @if (enquiryForm.get('email')?.errors?.['required']) { Email is required } @else {
+                  @if (enquiryForm.get('email')?.errors?.['email']) { Please enter a valid email
+                  address } }
+                </small>
+                }
+              </div>
+            </div>
+
+            <!-- phone number -->
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input type="tel" id="phone" formControlName="phone" class="form-control enquiry-input" placeholder="Phone Number" [pattern]="phonePattern" [class.is-invalid]="enquiryForm.get('phone')?.invalid && enquiryForm.get('phone')?.touched" />
+                @if (enquiryForm.get('phone')?.invalid && enquiryForm.get('phone')?.touched) {
+                <small class="text-danger">Phone number is required</small>
+                } @else {
+                @if (enquiryForm.get('phone')?.errors?.['pattern']) { Please enter a valid phone number
+                }
+                }
+              </div>
+            </div>
+
+            <!-- country -->
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" id="country" formControlName="country" class="form-control enquiry-input" placeholder="Country" />
+              </div>
+            </div>
+
+            <!-- subject -->
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="subject" class="form-label">Subject</label>
+                <input type="text" id="subject" formControlName="subject" class="form-control enquiry-input" placeholder="Subject" />
+              </div>
+            </div>
+
+            <!-- Number of People -->
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="number_of_people" class="form-label"
+                  >Number of People<span class="text-danger">*</span></label
+                >
+                <input
+                  type="number"
+                  id="number_of_people"
+                  formControlName="number_of_people"
+                  class="form-control enquiry-input"
+                  placeholder="Number of people"
+                  min="1"
+                />
+                @if (enquiryForm.get('number_of_people')?.invalid &&
+                enquiryForm.get('number_of_people')?.touched) {
+                <small class="text-danger">Number of people is required</small>
+                }
+              </div>
+            </div>
+
+            <!-- Travel Date -->
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="travel_date" class="form-label">Travel Date</label>
+                <div class="enquiry-date-input-wrapper position-relative">
+                  <div class="enquiry-date-input" (click)="openEnquiryDatePicker()">
+                    <i class="fa fa-calendar-days me-2"></i>
+                    <span>{{ getEnquiryFormattedDate() }}</span>
+                  </div>
+                  <!-- Hidden Material Datepicker -->
+                  <mat-form-field class="hidden-datepicker">
+                    <input
+                      matInput
+                      formControlName="travel_date"
+                      [matDatepicker]="enquiryDatepicker"
+                      readonly
+                    />
+                    <mat-datepicker #enquiryDatepicker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                @if (enquiryForm.get('travel_date')?.invalid &&
+                enquiryForm.get('travel_date')?.touched) {
+                <small class="text-danger">Travel date is required</small>
+                }
+              </div>
+            </div>
+
+            <!-- Tour Details -->
+            <div class="col-md-12">
+              <div class="form-group mb-3">
+                <label for="message" class="form-label">Tour Details</label>
+                <textarea
+                  id="message"
+                  formControlName="message"
+                  class="form-control enquiry-textarea"
+                  rows="4"
+                  placeholder="Write about tour info"
+                ></textarea>
+              </div>
+            </div>
+
+            <!-- Save Info Checkbox -->
+            <div class="col-md-12">
+              <div class="form-group mb-4">
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    id="save_info"
+                    formControlName="save_info"
+                    class="form-check-input"
+                  />
+                  <label for="save_info" class="form-check-label">
+                    Save my email address & name when I comment further time.
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+              <button
+                type="submit"
+                class="btn enquiry-submit-btn"
+                [disabled]="isEnquirySubmitting || enquiryForm.invalid"
+              >
+                @if (isEnquirySubmitting) {
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                } @else { Submit For Enquiry
+                <i class="fa fa-arrow-up ms-2"></i>
+                }
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Email Confirmation Modal -->
+@if (showEmailConfirmation) {
+<div
+  class="modal fade show"
+  id="emailConfirmationModal"
+  tabindex="-1"
+  style="display: block; background-color: rgba(0, 0, 0, 0.5)"
+  (click)="cancelEmailSending()"
+>
+  <div class="modal-dialog modal-dialog-centered" (click)="$event.stopPropagation()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Email Sending</h5>
+        <button type="button" class="btn-close" (click)="cancelEmailSending()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="email-preview">
+          <div class="mb-3">
+            <strong>To:</strong>
+            <p class="mb-0 text-break">{{ emailPreview.to }}</p>
+          </div>
+          <div class="mb-3">
+            <strong>Subject:</strong>
+            <p class="mb-0">{{ emailPreview.subject }}</p>
+          </div>
+          <div class="mb-3">
+            <strong>Content:</strong>
+            <div class="email-body-preview border p-3 rounded bg-light">
+              <pre class="mb-0 white-space-pre-wrap">{{ emailPreview.body }}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cancelEmailSending()">
+          Cancel
+        </button>
+        <button type="button" class="btn mainBtn text-white" (click)="confirmAndSendEmail()">
+          @if (isEnquirySubmitting) {
+          <span class="spinner-border spinner-border-sm me-2"></span>
+          } Confirm & Send
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+}
+
+<!-- Gallery lightbox overlay -->
+@if (galleryLightboxOpen && tour?.gallery?.length) {
+<div class="gallery-lightbox" (click)="closeGalleryLightbox()" role="dialog" aria-modal="true" aria-label="Gallery lightbox">
+  <div class="gallery-lightbox__backdrop"></div>
+  <button type="button" class="gallery-lightbox__close" (click)="closeGalleryLightbox()" aria-label="Close">
+    <i class="fa fa-times"></i>
+  </button>
+  <button type="button" class="gallery-lightbox__nav gallery-lightbox__nav--prev" (click)="galleryPrev(); $event.stopPropagation()" aria-label="Previous image">
+    <i class="fa fa-chevron-left"></i>
+  </button>
+  <button type="button" class="gallery-lightbox__nav gallery-lightbox__nav--next" (click)="galleryNext(); $event.stopPropagation()" aria-label="Next image">
+    <i class="fa fa-chevron-right"></i>
+  </button>
+  <div class="gallery-lightbox__zoom-bar">
+    <button type="button" class="gallery-lightbox__zoom-btn" (click)="galleryZoomOut(); $event.stopPropagation()" aria-label="Zoom out">
+      <i class="fa fa-search-minus"></i>
+    </button>
+    <span class="gallery-lightbox__zoom-value">{{ (galleryZoomLevel * 100) | number:'1.0-0' }}%</span>
+    <button type="button" class="gallery-lightbox__zoom-btn" (click)="galleryZoomIn(); $event.stopPropagation()" aria-label="Zoom in">
+      <i class="fa fa-search-plus"></i>
+    </button>
+  </div>
+  <div class="gallery-lightbox__content" (click)="$event.stopPropagation()">
+    <div class="gallery-lightbox__img-wrap ">
+      <img
+        [src]="tour!.gallery[galleryCurrentIndex]"
+        [alt]="tour!.title + ' - Image ' + (galleryCurrentIndex + 1)"
+        class="gallery-lightbox__img rounded-3"
+        [style.transform]="'scale(' + galleryZoomLevel + ')'"
+        (click)="$event.stopPropagation()"
+        draggable="false"
+      />
+    </div>
+  </div>
+  <div class="gallery-lightbox__counter">
+    {{ galleryCurrentIndex + 1 }} / {{ tour!.gallery.length }}
+  </div>
+</div>
+}

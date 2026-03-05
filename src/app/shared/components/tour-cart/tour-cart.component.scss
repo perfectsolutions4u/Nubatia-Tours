@@ -1,0 +1,67 @@
+@use '../../../styles/variables.scss' as *;
+.tour{
+  h3{
+    font-size: 18px;
+    height: 45px;
+    color: $text-color;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+  }
+  figcaption{
+    // height: 100px;
+
+    .mainBtn{
+      padding-block: 12px !important;
+    }
+
+    .box{
+      font-size: 11px;
+      margin-right: 0.3rem;
+      padding: 0.3rem 0.5rem;
+      border-radius: $border-radius;
+    }
+
+    .durationBox{
+      background-color:  rgba($primary-color, 0.2);
+      color: $primary-color;
+    }
+
+    .destinationBox{
+      background-color:  rgba($second-color, 0.2);
+      color: $second-color;
+    }
+
+    .typeBox{
+      background-color:  rgba($third-color, 0.2);
+      color: $third-color;
+    }
+
+    p{
+      line-clamp: 4;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      min-height: 80px;
+    }
+    span.fontsm{font-size: 11px;}
+  }
+
+  &:hover{
+
+    transform: translateY(-10px);
+    transition: $transition;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+    border: 1px solid $second-color !important;
+
+    h3{color: $primary-color;}
+
+  }
+
+}

@@ -1,0 +1,38 @@
+<div
+  [routerLink]="['/blog', blog?.slug]"
+  role="button"
+  class="blog-cart  cPointer border rounded-3 overflow-hidden transition p-2"
+>
+<figure class="img-Hover rounded-2 overflow-hidden position-relative mb-2">
+  <img
+    class="w-100 h-100 object-fit-cover transition"
+    [src]="blog?.featured_image"
+    loading="lazy"
+    [title]="blog?.title"
+    [alt]="blog?.title"
+  />
+
+  <!-- <span class="position-absolute top-0 end-0 m-2">
+    <i class="fas fa-location-dot textSecondColor me-2"></i> 
+  </span> -->
+</figure>
+<figcaption class="p-2 text-capitalize">
+  <!-- <p><i class="fas fa-location-dot me-2 textSecondColor"></i> {{ blog?.status }}</p> -->
+  
+  <h3 [routerLink]="['/blog', blog?.slug]" class="text-capitalize transition fs-5 ">
+    {{ blog?.title }}
+  </h3>
+
+  @if (blog?.created_at) {
+  <div class="calenderBox textMainColor border rounded-3 px-2 py-1 my-3">
+    <i class="fas fa-calendar-days me-2 textSecondColor"></i> {{ blog?.created_at | date : 'dd MMM, yyyy' }}
+  </div>
+  }
+
+  <p
+    class="description fontsm"
+    [innerHTML]="sanitizeHtml(blog?.description || 'No description available')"
+  ></p>
+</figcaption>
+  
+</div>

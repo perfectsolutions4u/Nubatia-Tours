@@ -1,0 +1,32 @@
+@use '../../../styles/variables.scss' as *;
+.blog-cart{
+  figure{height: 200px !important;}
+  h3{
+    height: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .calenderBox{
+    background-color: #f5f3ee;
+  }
+  .description{
+    // max-height: 80px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+  
+  &:hover{
+    figcaption{
+      h3{color: $primary-color;}
+    }
+  }
+
+}

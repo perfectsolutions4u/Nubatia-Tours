@@ -1,0 +1,58 @@
+@use '../../styles/variables.scss' as *;
+.privacy-policy-content {
+  padding: 1.5rem 2rem 2rem;
+  color: #110f0f;
+  line-height: 1.6;
+
+  ::ng-deep .effective-date {
+    color: $primary-color;
+    font-family: $heading-font;
+    font-weight: bold;
+    font-size: 1rem;
+    margin: 0 0 1rem;
+  }
+
+  ::ng-deep .main-title {
+    color: $second-color;
+    font-family: $heading-font;
+    font-weight: bold;
+    font-size: 1.25rem;
+    margin: 1.5rem 0 0.5rem;
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
+
+  ::ng-deep .sub-title {
+    color: #1C325C;
+    font-family: $heading-font;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 1.25rem 0 0.4rem;
+  }
+
+  ::ng-deep .sub-sub-title {
+    color: #110f0f;
+    font-weight: bold;
+    margin: 1rem 0 0.4rem;
+  }
+
+  ::ng-deep p {
+    margin: 0.4rem 0 0.8rem;
+  }
+
+  ::ng-deep ul {
+    margin: 0.4rem 0 0.8rem;
+    padding-left: 1.5rem;
+    list-style-type: square;
+
+    li {
+      margin: 0.25rem 0;
+    }
+  }
+
+  ::ng-deep a {
+    color: #1C325C;
+    text-decoration: underline;
+  }
+}

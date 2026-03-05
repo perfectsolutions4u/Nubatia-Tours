@@ -1,0 +1,76 @@
+<main>
+    <!-- why travel with us -->
+<section class="my-5 pt-5">
+    <div class="container">
+      <div class="mainTitle mb-5">
+        <h2 class="text-capitalize ">
+          Why travel with Nubatia Tours?
+        </h2>
+        <p>
+          Your entire vacation is designed around your requirements with expert guidance every step of the way.
+        </p>
+      </div>
+  
+      <div class="row g-3">
+          <div class="col-lg-3 col-sm-6" *ngFor="let feature of features">
+            <div class="item bg-white p-3 rounded-3 d-flex align-items-center flex-column gap-3 text-center">
+              <div class="iconBox bgSecondColor">
+                <i class="" [ngClass]="feature.icon"></i>
+              </div>
+              <h3 class="text-capitalize h5">{{ feature.title }}</h3>
+              @if(feature.description) {
+                <div class="description">
+                  @for(description of feature.description; track description) {
+                    <p class="text-capitalize pb-3 border-bottom text-muted fontsm">{{ description }}</p>
+                  }
+                </div>
+              }
+              @if(feature.image1) {
+                <img [src]="feature.image1" alt="image1" class="img-fluid">
+              }
+              @if(feature.image2) {
+                <img [src]="feature.image2" alt="image2" class="img-fluid">
+              }
+            </div>
+          </div>
+        </div>
+    </div>
+  </section>
+
+
+  <!-- contact us -->
+  <section class=" py-5">
+    <div class="container">
+      <div class="contact flexBetween bg-white p-3 rounded-3 overflow-hidden py-4">
+        <div class="d-flex align-items-center gap-3">
+            <div class="iconBox flex-shrink-0">
+                <i class="fa fa-phone-volume text-white"></i>
+            </div>
+            <div>
+                <h5 class="text-capitalize textMainColor">Ready to Plan Your Dream Cruise?</h5>
+                <p class="text-muted">Speak with our Egypt specialists for your perfect luxury journey.</p>
+                <div class="d-flex align-items-center gap-3 flex-wrap fontsm">
+                    <span>
+                        <i class="fa fa-shield textSecondColor me-1"></i>
+                        free consultation
+                    </span>
+                    <span>
+                        <i class="fa-regular fa-clock textSecondColor me-1"></i>
+                        24/7 Support
+                    </span>
+                    <span>
+                        <i class="fa fa-award textSecondColor me-1"></i>
+                        Best Price Guarantee
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" routerLink="/contact" class="mainBtn flex-shrink-0">
+            <i class="fa-regular fa-calendar-check me-2"></i>
+            start planning
+        </button>
+      </div>
+    </div>
+  </section>
+</main>

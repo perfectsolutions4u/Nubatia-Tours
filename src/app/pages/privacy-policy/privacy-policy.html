@@ -1,0 +1,21 @@
+
+
+<app-banner
+  [title]="bannerTitle"
+  [backgroundImage]="backgroundImage"
+></app-banner>
+
+<section class="my-5 pt-5">
+    <div class="container">
+        <div class="detailsBox rounded-4 overflow-hidden">
+            <div class="headBox text-center ">
+                <button class="mainBtn mb-4 text-capitalize">
+                    <i class="fa fa-location-dot me-2"></i>
+                    <span>travel guide</span>
+                </button>
+                <h2 class="text-capitalize text-white position-relative">Privacy Policy</h2>
+            </div>
+            <div class="privacy-policy-content" [innerHTML]="sanitizer.bypassSecurityTrustHtml(privacyPolicy)"></div>             
+        </div>
+    </div>
+</section>

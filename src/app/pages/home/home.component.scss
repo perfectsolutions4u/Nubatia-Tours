@@ -1,0 +1,309 @@
+@use '../../styles/variables.scss' as *;
+
+main {
+
+
+  figure{
+    height: 78vh;
+    margin-bottom: 0px;
+  }
+
+  figcaption{
+    position: absolute;
+    inset: 0;
+    color: #fff;
+    text-align: center;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.3);
+    
+    h1{
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    p{
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 400;
+      margin-bottom: 1rem;
+    }
+    button{
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 400;
+    }
+  }
+
+
+}
+
+.trust-section {
+    background: linear-gradient(135deg, rgba($second-color, 0.1) 0%, rgba($second-color, 0.05) 100%);
+    padding: 50px 0;
+    position: relative;
+    border-top: 1px solid rgba($second-color, 0.5);
+    border-bottom: 1px solid rgba($second-color, 0.5);
+
+    &::before{
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('../../../assets/new_images/download.svg') repeat-x;
+    }
+
+    .item{
+      position: relative;
+      box-shadow: 0 0 10px 0 rgba($second-color, 0.1);
+      transition: $transition-fast;
+
+      &::before{
+        content: '';
+        position: absolute;
+        inset: 0;
+        width: 4px;
+        height: 100%;
+        background-color: $second-color;
+        left: 0;
+        top: 0;
+        transform: scaleY(0);
+        border-radius: 0 10px 10px 0;
+        transition: $transition-fast;
+      }
+
+      .iconBox{
+        box-shadow: $box-shadow;
+        font-size: 1.5rem;
+        color: #fff;
+      }
+
+      &:hover{
+        transform: translateY(-10px);
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+        border-color: $second-color;
+        &::before{
+          transform: scaleY(1);
+        }
+
+        .iconBox{
+          background-color: #fff;
+          color: $second-color;
+          box-shadow: $box-shadow;
+          transform: rotate(360deg);
+          border: 1px solid $second-color;
+          transition: $transition-fast;
+        }
+      }
+    }
+}
+
+.tripadvisor-section {
+  figure{
+    height: 150px;
+    width: 170px;
+
+    &.center{
+      height: 180px;
+    }
+  }
+
+  @media (max-width: 992px) {
+    figure{
+      height: 130px;
+      width: 150px;
+
+      &.center{
+        height: 160px;
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    figure{
+      height: 100px;
+      width: 100px;
+      &.center{
+        height: 120px;
+      }
+    }
+  }
+  @media (max-width: 576px) {
+    figure{
+      height: 80px;
+      width: 80px;
+      margin: 3px;
+      &.center{
+        height: 100px;
+      }
+    }
+  }
+  @media (max-width: 450px) {
+    figure{
+      height: 60px;
+      width: 60px;
+      &.center{
+        height: 80px;
+      }
+    }
+  }
+}
+
+.makeTripForm {
+  background: $gradient-color;
+  // background: linear-gradient(url('../../../assets/new_images/button-bg.png') no-repeat center center ),$primary-color;
+  //   background-size: cover;
+  border-top: 1px solid rgba($second-color, 0.5);
+  border-bottom: 1px solid rgba($second-color, 0.5);
+  position: relative;
+
+  &::before{
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('../../../assets/new_images/download.svg') repeat-x;
+  }
+
+  .box{
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid $second-color;
+  }
+}
+
+
+
+// -------------------
+
+.new-about-section {
+  background-image: url('../../../assets/image/home4-about-bg.png'), linear-gradient(180deg, #FFF2E2 0%, #FFF2E2 100%);
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    .worldWideImages {
+      li {
+        width: 40px;
+        height: 40px;
+        margin-left: -20px;
+        &:first-child {
+          margin-left: 0;
+        }
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+    figure{
+      height: 200px;
+      margin-bottom: 0;
+    }
+
+    .link:hover {
+      color: $primary-color !important;
+      i {
+        transform: rotate(-30deg);
+      }
+    }
+
+    
+    .col-6:first-child >div {
+      border-bottom-right-radius: 0 !important;
+    }
+    .col-6:nth-child(2) figure {
+      border-bottom-left-radius: 0 !important;
+    }
+    .col-6:nth-child(3) figure {
+      border-top-right-radius: 0 !important;
+    }
+    .col-6:last-child figure {
+      border-top-left-radius: 0 !important;
+    }
+}
+
+
+.video-section {
+  background-image: url('../../../assets/image/hom4-why-choose-bg.webp'), linear-gradient(180deg, #F2F2FF 0%, #F2F2FF 100%);
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  .contactInfo {
+    border: 8px solid #F2F2FF;
+    transform: translateY(40px);
+    position: relative;
+    z-index: 10;
+    max-width: 700px;
+    margin: 0 auto;
+    @media (max-width: 768px) {
+      max-width: 95%;
+
+    }
+    @media (max-width: 576px) {
+      max-width: 95%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 10px;
+      // padding: 10px;
+      border-radius: 10px !important;
+      border: 1px solid #F2F2FF;
+      // background-color: #F2F2FF;
+    }
+
+  }
+
+}
+
+// offers section
+.category-cart {
+  figure {
+    height: 200px;
+    transition: $transition;
+    -webkit-transition: $transition;
+    -moz-transition: $transition;
+    -ms-transition: $transition;
+    -o-transition: $transition;
+  }
+
+  figcaption {
+    padding-bottom: 0 !important;
+
+    h3 {
+      margin-bottom: 0px;
+    }
+
+    h4 {
+      margin-bottom: 0;
+      transform: translateY(40px);
+      -webkit-transform: translateY(40px);
+      -moz-transform: translateY(40px);
+      -ms-transform: translateY(40px);
+      -o-transform: translateY(40px);
+    }
+  }
+
+  &:hover {
+    figure {
+      height: 160px;
+    }
+
+    figcaption {
+
+      h3,
+      h4 {
+        color: $primary-color;
+      }
+
+      h3 {
+        margin-bottom: 4px;
+      }
+
+      h4 {
+        margin-bottom: 4px;
+        transform: translateY(0px);
+        -webkit-transform: translateY(0px);
+        -moz-transform: translateY(0px);
+        -ms-transform: translateY(0px);
+        -o-transform: translateY(0px);
+      }
+
+    }
+  }
+}

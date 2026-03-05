@@ -1,0 +1,64 @@
+@use '../../../styles/variables.scss' as *;
+.banner-container {
+  position: relative;
+  width: 100%;
+  height: 55vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  background: $gradient-color;
+  overflow: hidden;
+}
+
+.banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, rgba(28, 50, 92, 0.8) 0%, rgba(197, 149, 91, 0.3) 100%);
+  z-index: 1;
+
+}
+
+.banner-breadcrumb {
+  background: $gradient-color;
+  border-bottom: 1px solid rgba($second-color, 1);
+  border-top: 1px solid rgba($second-color, 0.2);
+}
+
+.banner-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  padding: 2rem;
+}
+
+.banner-title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 0 0 1rem 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.banner-subtitle {
+  font-size: 1.5rem;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .banner-container {
+    height: 300px;
+  }
+
+  .banner-title {
+    font-size: 2rem;
+  }
+
+  .banner-subtitle {
+    font-size: 1.2rem;
+  }
+}
+

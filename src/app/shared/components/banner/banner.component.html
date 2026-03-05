@@ -1,0 +1,18 @@
+<div class="banner-breadcrumb">
+  <div class="container py-3">
+    <span class="text-white">
+      <i class="fa fa-home me-2 "></i>
+      <span  routerLink="/">Home</span>
+      <span class="mx-3">/</span>
+      <span class="textSecondColor">{{ title }}</span>
+    </span>
+  </div>
+</div>
+<div class="banner-container" [style.background-image]="backgroundImage ? 'url(' + backgroundImage + ')' : 'none'">
+  <div class="banner-overlay"></div>
+  <!-- <div class="banner-content">
+    <h1 class="banner-title">{{ title }}</h1>
+    <p class="banner-subtitle">{{ subtitle }}</p>
+  </div> -->
+</div>
+

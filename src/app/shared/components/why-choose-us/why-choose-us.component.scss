@@ -1,0 +1,53 @@
+@use '../../../styles/variables.scss' as *;
+
+.item {
+  position: relative;
+  box-shadow: 0 0 10px 0 rgba($second-color, 0.1);
+  transition: $transition-fast;
+  &::before{
+    content: '';
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    background-color: $second-color;
+    left: 0%;
+    top: 0;
+    transform: scaleX(0) ;
+    border-radius: 10px 0 0 10px;
+    transition: $transition-fast;
+  }
+
+  .iconBox{
+    box-shadow: $box-shadow;
+    font-size: 1.5rem;
+    color: $primary-color;
+  }
+
+  p{
+    line-clamp: 6;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    min-height: 125px;
+  }
+
+  &:hover{
+    transform: translateY(-10px);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+    border-color: $second-color;
+    &::before{
+      transform: scaleX(1) ;
+    }
+
+    .iconBox{
+      background-color: #fff;
+      color: $second-color;
+      box-shadow: $box-shadow;
+      transform: rotate(360deg) ;
+      border: 1px solid $second-color;
+      transition: $transition-fast;
+    }
+  }
+}

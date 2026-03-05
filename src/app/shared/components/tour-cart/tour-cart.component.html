@@ -1,0 +1,101 @@
+<div
+  [routerLink]="['/tour', tour?.slug]"
+  role="button"
+  [ngClass]="layoutType === 'grid' ? 'row gx-3 flex-column' : 'row gx-3 flex-wrap'"
+  class="tour align-items-center rounded-4 overflow-hidden border transition ms-1 mb-1"
+>
+  <div [ngClass]="layoutType === 'grid' ? '' : ' col-md-5'" class="px-0">
+    <figure class="img-Hover rounded- overflow-hidden position-relative mb-0">
+      <img
+        [src]="tour?.featured_image"
+        class="w-100 transition"
+        height="200px"
+        [alt]="tour?.title"
+        [title]="tour?.title"
+        loading="lazy"
+      />
+
+      
+
+      <!-- <span
+        (click)="tour && tour.id && addFav(tour.id, $event)"
+        class="textMainColor bg-white rounded-circle p-1 pb-0 fs-5 fw-bold position-absolute top-0 end-0 m-2 z-3"
+      >
+        <i
+          [ngClass]="{
+            'fa-heart': true,
+            'fa-regular': tour && tour.id ? !favouriteIds.includes(tour.id) : true,
+            'fa-solid': tour && tour.id ? favouriteIds.includes(tour.id) : false
+          }"
+          class="fa fa-heart"
+        ></i>
+      </span> -->
+
+      <span class="position-absolute top-0 end-0 fw-bold me-4 mt-4 text-white bgSecondColor px-2 py-1 text-capitalize fontsm rounded-pill">
+        {{ 'common.from' | translate }}
+        <b class=" mb-0">{{ tour?.start_from | currency }}</b>
+      </span>
+      @if (tour?.featured) {
+      <span
+        class="text-capitalize bgMainColor text-white py-1 px-2 ms-4 mt-4 fontsm rounded-pill position-absolute top-0 start-0"
+        >{{ 'common.featured' | translate }}</span
+      >
+      }
+    </figure>
+  </div>
+
+  <div [ngClass]="layoutType === 'grid' ? '' : ' col-md-7'" class="p-3 pb-1">
+    <figcaption>
+      <!-- <div class="mb-1 fontsm">
+          @for (filled of [1, 2, 3, 4, 5]; track filled) {
+          <i [ngClass]="filled ? 'fa fa-star text-warning' : 'fa-regular fa-star text-warning'"></i>
+          }
+      </div> -->
+
+      <h3 [routerLink]="['/tour', tour?.slug]" class="text-capitalize transition cPointer">
+        {{ tour?.title }}
+      </h3>
+
+      <!-- duration -->
+      @if (tour && tour.duration ) {
+        <span class="box durationBox">
+          <i class="fa fa-clock me-1 "></i>
+            {{ tour.duration }}
+        </span>
+      }
+      <!-- destination -->
+      @if (tour && tour.destinations && tour.destinations.length > 0) {
+        <span class="box destinationBox">
+          <i class="fas fa-location-dot me-1 "></i>
+            {{ tour.destinations[0].title }}
+        </span>
+      }
+      <!-- type -->
+      @if (tour && tour.type ) {
+        <span class="box typeBox">
+          <i class="fa fa-users me-1 "></i>
+            {{ tour.type }}
+        </span>
+      }
+
+      <!-- overview-text -->
+      @if (tour && tour.overview_text ) {
+        <p class="my-3 fontsm text-muted ">
+            {{ tour.overview_text }}
+        </p>
+      }
+
+      <button class="mainBtn w-100 my-2 mt-0 text-capitalize">explore journey</button>
+
+      @if (cartItemId != null) {
+      <button
+        type="button"
+        class="btn btn-danger text-nowrap w-100 mt-4 transition cPointer"
+        (click)="onRemoveFromCart(cartItemId, $event)"
+      >
+        Remove from cart
+      </button>
+      } 
+    </figcaption>
+  </div>
+</div>
