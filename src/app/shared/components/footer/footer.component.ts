@@ -91,9 +91,9 @@ export class FooterComponent implements OnInit {
           : item.option_value || '';
       }
 
-      this.email= 'info@newtourism.com';
-      this.phone= '20 10 26118233';
-      this.address= '123 Main St, Cairo, Egypt';
+      this.email= 'info@nubatiatours.com';
+      this.phone= '+20 11 50596686';
+      this.address= 'Haram street, Giza, Egypt';
       this.title= 'Nubatia Tours';
     });
   }

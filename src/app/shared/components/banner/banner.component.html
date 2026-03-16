@@ -8,7 +8,12 @@
     </span>
   </div>
 </div>
-<div class="banner-container" [style.background-image]="backgroundImage ? 'url(' + backgroundImage + ')' : 'none'">
+<div class="banner-container"
+ [style.background-image]="backgroundImage ? 'url(' + backgroundImage + ')' : 'none'"
+ [style.background-size]="'cover'"
+ [style.background-position]="'center'"
+ [style.background-repeat]="'no-repeat'"
+>
   <div class="banner-overlay"></div>
   <!-- <div class="banner-content">
     <h1 class="banner-title">{{ title }}</h1>

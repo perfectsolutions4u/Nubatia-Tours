@@ -125,10 +125,10 @@ export class ContactComponent {
             // For phone, keep as array if it's an array, otherwise convert to string
             if (Array.isArray(phoneItem.option_value)) {
               this.phoneNumber = phoneItem.option_value;
-              this.phoneNumber = '+20 10 26118233';
+              this.phoneNumber = '+20 11 50596686';
             } else {
               this.phoneNumber = phoneItem.option_value || '';
-              this.phoneNumber = '+20 10 26118233';
+              this.phoneNumber = '+20 11 50596686';
             }
           }
 
@@ -136,8 +136,8 @@ export class ContactComponent {
           this.userAddress = addressItem ? this.extractOptionValue(addressItem) : '';
           this.userLocation = locationItem ? this.extractOptionValue(locationItem) : '';
 
-          this.userEmail = 'info@scrappevoyager.com';
-          this.userAddress = '123 Main St, Cairo, Egypt';
+          this.userEmail = 'info@nubatiatours.com';
+          this.userAddress = 'Haram street, Giza, Egypt';
           this.userLocation = 'https://www.google.com/maps';
 
           this.cdr.markForCheck();

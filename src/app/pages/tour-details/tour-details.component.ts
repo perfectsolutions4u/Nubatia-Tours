@@ -140,15 +140,17 @@ export class TourDetailsComponent implements OnInit {
           this.settingsEmail = Array.isArray(emailSetting?.option_value)
             ? emailSetting.option_value[0] || ''
             : emailSetting?.option_value || '';
+          this.settingsEmail = 'info@nubatiatours.com';
           const phoneSetting = res.data.find((item: any) => item.option_key === 'CONTACT_PHONE_NUMBER');
           this.phoneNumber = Array.isArray(phoneSetting?.option_value)
             ? phoneSetting.option_value[0] || ''
             : phoneSetting?.option_value || '';
+          this.phoneNumber = '+20 11 50596686';
           const addressSetting = res.data.find((item: any) => item.option_key === 'address');
           this.address = Array.isArray(addressSetting?.option_value)
             ? addressSetting.option_value[0] || ''
             : addressSetting?.option_value || '';
-          
+          this.address = 'Haram street, Giza, Egypt';
         }
       },
     });
