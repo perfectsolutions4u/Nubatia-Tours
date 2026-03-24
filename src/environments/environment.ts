@@ -4,5 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://tourism-api.perfectsolutions4u.com/api',
+  // apiUrl: 'https://tourism-api.perfectsolutions4u.com/api',
+  apiUrl: 'https://backend.splendorjourneys.com/api',
+
 };
