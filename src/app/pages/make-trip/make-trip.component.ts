@@ -5,7 +5,6 @@ import {
   Validators,
   FormControl,
   FormGroup,
-  FormArray,
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
@@ -144,8 +143,10 @@ export class MakeTripComponent implements OnInit, OnDestroy {
   destinationList: any[] = [];
   minBudget: number = 0;
   maxBudget: number = 0;
+  minDate!: Date;
 
   ngOnInit() {
+    this.minDate = this.datepickerService.getTodayMinDate();
     this.seoService.updateSeoData(
       {},
       'Nubatia Tours - Make Your Trip',
@@ -201,7 +202,7 @@ export class MakeTripComponent implements OnInit, OnDestroy {
 
   private buildForms() {
     this.firstFormGroup = new FormGroup({
-      destination: new FormArray([], [this.atLeastOneDestinationValidator]), // Changed to FormArray to support multiple selections
+      destination: new FormControl('', [this.atLeastOneDestinationValidator]),
     });
 
     this.secondFormGroup = new FormGroup({
@@ -217,7 +218,7 @@ export class MakeTripComponent implements OnInit, OnDestroy {
       last_name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       nationality: new FormControl('', [Validators.required]),
-      phone_number: new FormControl('' , [Validators.required, Validators.pattern(/^01[0-2|5]\d{8}$/)]),
+      phone_number: new FormControl('' , [Validators.required, Validators.pattern(/^[0-9]{0,50}$/)]),
       adults: new FormControl(0),
       children: new FormControl(0),
       infants: new FormControl(0),
@@ -238,17 +239,10 @@ export class MakeTripComponent implements OnInit, OnDestroy {
     const toDate = this.toDate(data.ToDuration ?? null);
     const approx = data.appro ?? null;
 
-    // Handle destination as array (can be string or array)
-    const destinationArray = Array.isArray(destination)
-      ? destination
-      : destination
-      ? [destination]
-      : [];
-    const destinationFormArray = this.firstFormGroup.get('destination') as FormArray;
-    destinationFormArray.clear();
-    destinationArray.forEach((dest: string) => {
-      destinationFormArray.push(new FormControl(dest));
-    });
+    const destinationString = Array.isArray(destination)
+      ? destination.join(',')
+      : String(destination || '');
+    this.firstFormGroup.get('destination')?.setValue(destinationString);
 
     if (approx) {
       this.secondFormGroup.patchValue({
@@ -273,38 +267,46 @@ export class MakeTripComponent implements OnInit, OnDestroy {
   }
 
   onToursChange(event: any, destinationValue: string) {
-    const destinationFormArray = this.firstFormGroup.get('destination') as FormArray;
+    const destinationControl = this.firstFormGroup.get('destination') as FormControl<string | null>;
     const isChecked = event.target.checked;
+    const selectedDestinations = (destinationControl.value || '')
+      .split(',')
+      .map((item) => item.trim())
+      .filter((item) => item.length > 0);
 
     if (isChecked) {
-      // Add destination if checked
-      destinationFormArray.push(new FormControl(destinationValue));
+      if (!selectedDestinations.includes(destinationValue)) {
+        selectedDestinations.push(destinationValue);
+      }
     } else {
-      // Remove destination if unchecked
-      const index = destinationFormArray.controls.findIndex(
-        (control) => control.value === destinationValue
-      );
+      const index = selectedDestinations.findIndex((item) => item === destinationValue);
       if (index > -1) {
-        destinationFormArray.removeAt(index);
+        selectedDestinations.splice(index, 1);
       }
     }
+
+    destinationControl.setValue(selectedDestinations.join(','));
+    destinationControl.updateValueAndValidity();
   }
 
   isDestinationSelected(destinationValue: string): boolean {
-    const destinationFormArray = this.firstFormGroup.get('destination') as FormArray;
-    return destinationFormArray.controls.some((control) => control.value === destinationValue);
+    const destinationControl = this.firstFormGroup.get('destination') as FormControl<string | null>;
+    const selectedDestinations = (destinationControl.value || '')
+      .split(',')
+      .map((item) => item.trim())
+      .filter((item) => item.length > 0);
+    return selectedDestinations.includes(destinationValue);
   }
 
   submitForm() {
     if (this.submitFormGroup.status == 'VALID') {
-      // Get destinations array from FormArray
-      const destinationFormArray = this.firstFormGroup.get('destination') as FormArray;
-      const destinations = destinationFormArray.controls.map((control) => control.value);
+      const destination = (this.firstFormGroup.get('destination')?.value || '') as string;
 
       this.makeTripForm = {
-        destination: destinations, // Send as array
+        destination,
         ...this.secondFormGroup.value,
         ...this.submitFormGroup.value,
+        phone_number: String(this.submitFormGroup.value.phone_number ?? '').trim(),
       };
 
       this._MaketripService.sendDataTrip(this.makeTripForm).subscribe({
@@ -370,8 +372,8 @@ export class MakeTripComponent implements OnInit, OnDestroy {
 
   // Custom validator to ensure at least one destination is selected
   private atLeastOneDestinationValidator(control: AbstractControl): ValidationErrors | null {
-    const formArray = control as FormArray;
-    if (formArray.length === 0) {
+    const destinationValue = String(control.value || '').trim();
+    if (!destinationValue) {
       return { atLeastOneRequired: true };
     }
     return null;

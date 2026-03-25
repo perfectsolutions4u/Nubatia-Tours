@@ -136,7 +136,7 @@
                     </h4>
                     <mat-form-field appearance="outline" class="w-100 date-range-field">
                       <mat-label>Select a date range</mat-label>
-                      <mat-date-range-input [formGroup]="secondFormGroup" [rangePicker]="picker">
+                      <mat-date-range-input [formGroup]="secondFormGroup" [rangePicker]="picker" [min]="minDate">
                         <input
                           matStartDate
                           matInput
@@ -278,7 +278,7 @@
                     <mat-form-field appearance="outline" class="w-100 modern-form-field">
                       <mat-label>Phone number</mat-label>
                       <input
-                        type="tel"
+                        type="number"
                         matInput
                         formControlName="phone_number"
                         placeholder="01069769249"

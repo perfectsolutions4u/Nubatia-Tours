@@ -98,8 +98,10 @@ export class TourDetailsComponent implements OnInit {
   isDatePickerOpen: boolean = false;
   openOptionDropdowns: Map<number, boolean> = new Map();
   phonePattern: string = '^01[0-2|5]\\d{8}$';
+  minDate!: Date;
 
   ngOnInit(): void {
+    this.minDate = this.datepickerService.getTodayMinDate();
 
     this.writeReview = new FormGroup({
       reviewer_name: new FormControl('', [Validators.required]),

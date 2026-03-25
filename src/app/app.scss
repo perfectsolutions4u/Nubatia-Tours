@@ -1,0 +1,8 @@
+@use './styles/variables' as *;
+
+// Spinner "color" is applied via currentColor + background-color in ngx-spinner CSS.
+// Gradients must target the animated square directly (not the [color] input).
+:host ::ng-deep .ngx-spinner-overlay .la-square-jelly-box > div:nth-child(1) {
+  background-color: transparent !important;
+  background-image: linear-gradient(135deg, $primary-color 0%, $second-color 100%) !important;
+}

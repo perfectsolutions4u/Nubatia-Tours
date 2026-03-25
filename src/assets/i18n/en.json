@@ -77,7 +77,7 @@
   },
   "login": {
     "login": "Login",
-    "loginByAccount": "Log in by your majestic  Tours account",
+    "loginByAccount": "Log in by your Nubatia account",
     "emailAddress": "Email Address",
     "password": "Password",
     "forgotPassword": "Forgot Password ?",
@@ -91,7 +91,7 @@
   },
   "signup": {
     "signUp": "Sign Up",
-    "createAccount": "Create your majestic Tours account",
+    "createAccount": "Create your Nubatia account",
     "fullName": "Full Name",
     "yourName": "Your Name",
     "emailAddress": "Email Address",
@@ -113,7 +113,7 @@
     "login": "Login"
   },
   "forgetPassword": {
-    "loginByAccount": "Log in by your majestic  Tours account",
+    "loginByAccount": "Log in by your Nubatia account",
     "emailAddress": "Email Address",
     "otpCode": "OTP Code",
     "yourOtpCode": "Your OTP Code",

@@ -1,4 +1,4 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, computed, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BaseService } from './base.service';
 import { isPlatformBrowser } from '@angular/common';
@@ -9,12 +9,19 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AuthService extends BaseService {
   userdata: any;
+  private accessToken = signal<string | null>(null);
+  readonly isLoggedInSignal = computed(() => !!this.accessToken());
 
   constructor(
     protected override HttpClient: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     super(HttpClient);
+
+    // Initialize token signal once (browser-only).
+    if (this.isBrowser) {
+      this.accessToken.set(localStorage.getItem('accessToken'));
+    }
   }
 
   private get isBrowser() {
@@ -25,13 +32,14 @@ export class AuthService extends BaseService {
     if (this.isBrowser) {
       localStorage.setItem('accessToken', token);
     }
+    this.accessToken.set(token);
   }
   getToken(): string | null {
-    return this.isBrowser ? localStorage.getItem('accessToken') : null;
+    return this.accessToken();
   }
 
   isLoggedIn(): boolean {
-    return !!this.getToken();
+    return this.isLoggedInSignal();
   }
 
   logout(): void {
@@ -40,6 +48,7 @@ export class AuthService extends BaseService {
       // مسح favouriteIds عند تسجيل الخروج
       localStorage.removeItem('favouriteIds');
     }
+    this.accessToken.set(null);
     this.userdata = null;
   }
 

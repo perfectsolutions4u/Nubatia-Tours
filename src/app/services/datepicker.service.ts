@@ -6,6 +6,15 @@ import { MatDatepicker } from '@angular/material/datepicker';
 })
 export class DatepickerService {
   /**
+   * Returns today's date at local midnight.
+   * Use as minDate to disable all past days.
+   */
+  getTodayMinDate(): Date {
+    const today = new Date();
+    return new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  }
+
+  /**
    * Opens a date picker if it exists
    * @param datepicker - The MatDatepicker instance to open
    */

@@ -24,7 +24,6 @@
 
 .stepper-wrapper {
   position: relative;
-  z-index: 1;
 }
 
 /* ============================================
@@ -55,6 +54,10 @@
       border-radius: 10px;
       transition: all 0.3s ease;
       margin-bottom: 0.25rem;
+      flex-direction: column;
+      gap: 0.5rem;
+      height: fit-content !important;
+      
 
       &:hover {
         background: rgba(129, 154, 145, 0.05);
@@ -78,6 +81,22 @@
         background-color: $second-color;
         color: white;
       }
+    }
+
+    .mat-horizontal-stepper-header-container{
+      flex-wrap: wrap !important;
+      justify-content: center  !important;
+    }
+    
+    .mat-stepper-horizontal-line{
+      margin: 0 5px  !important;
+      min-width: 5px !important; 
+    }
+    @media screen and (max-width: 538px) {
+      .mat-stepper-horizontal-line{
+       display: none !important;
+      }
+      
     }
 
     .mat-step-content {
@@ -788,17 +807,23 @@ input[type="radio"] {
   }
 
   .step-actions {
-    flex-direction: column;
 
     .modern-btn {
-      width: 100%;
+      padding:  0.5rem ;
+      font-size: 0.8rem;
+      // i {
+      //   font-size: 0.8rem;
+      // }
+      // span {
+      //   font-size: 0.8rem;
+      // }
     }
   }
 
-  .final-actions {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
+  // .final-actions {
+  //   flex-direction: column;
+  //   gap: 0.75rem;
+  // }
 
   .counter-wrapper {
     gap: 0.75rem;
@@ -814,6 +839,10 @@ input[type="radio"] {
     position: relative;
   }
 
+  .modern-stepper {
+    overflow: visible;
+  }
+
   .step-actions {
     position: fixed;
     bottom: 0;
@@ -824,7 +853,7 @@ input[type="radio"] {
     margin-bottom: 0 !important;
     border-top: 2px solid rgba(129, 154, 145, 0.2);
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
-    z-index: 100;
+    z-index: 50100 !important;
     border-radius: 0;
   }
 

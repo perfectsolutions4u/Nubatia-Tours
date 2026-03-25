@@ -69,7 +69,8 @@ export class NavComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef
   ) {}
 
-  isLoggedIn = computed(() => this._AuthService.isLoggedIn()); // computed property to check if user is logged in
+  // Read live auth state (updates instantly after saveToken/logout).
+  isLoggedIn = computed(() => this._AuthService.isLoggedInSignal());
   logout = () => this._AuthService.logout();
   // get logo from settings
   logo: string = '';
@@ -108,7 +109,7 @@ export class NavComponent implements OnInit, OnDestroy {
         this.title = title?.option_value[0] || '';
         const phoneNumber = res.data.find((item: any) => item.option_key === 'CONTACT_PHONE_NUMBER');
         this.phoneNumber = phoneNumber?.option_value[0] || '';
-        this.phoneNumber = '+20 10 26118233';
+        this.phoneNumber = '+20 11 50596686';
         this.title = 'Nubatia Tours';
         // console.log('nav page -- logo -- ', this.logo);
         // console.log('nav page -- title -- ', this.title);

@@ -337,8 +337,7 @@ export class ProfileComponent implements OnInit {
   logout(): void {
     this._ProfileService.logoutProfile().subscribe({
       next: (response) => {
-        // // console.log(response);
-        localStorage.removeItem('accessToken');
+        this._AuthService.logout();
         // navigate it to home
         this._Router.navigate(['']);
         // // console.log('ahmed');
